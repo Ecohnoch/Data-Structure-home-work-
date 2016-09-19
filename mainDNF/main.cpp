@@ -50,8 +50,8 @@ public:
             for( int i = 0; i < length - 1; i++){  // main loop
                 if(ques.at(i) == '!'){
                     bool tmp = calF(ques.at(i+1));
-                    ques.at(i+1) = tmp?'t':'f';
-                    ques.erase(i, 1);
+                    ques.at(i) = tmp?'t':'f';
+                    ques.erase(i+1, 1);
                     return getRes(ques);
                 }
                 if(ques.at(i) == '(' && (ques.at(i+1) == 't'||ques.at(i+1) == 'f') && ques.at(i+2) ==')'){
@@ -61,7 +61,8 @@ public:
                 }
                 if(ques.at(i) == '|' || ques.at(i) == '&'){   // hequ and xiqu
                     if((ques.at(i-1) != '(' && ques.at(i-1) != ')') &&
-                            (ques.at(i+1) != '(' && ques.at(i+1) != ')')){
+                            (ques.at(i+1) != '(' && ques.at(i+1) != ')') &&
+                            (ques.at(i-1) != '!' && ques.at(i+1) != '!')){
 
                         bool tmp = calLogical(ques.at(i-1), ques.at(i), ques.at(i+1));
                         ques.at(i-1) = translate(tmp);
@@ -74,23 +75,62 @@ public:
     }
 
     void test(){
-        string ss("p|(!q&r)");
+        string ss("p|(q&r)");
+        int num = 0;
         for(p = 0; p <= 1; p++){
             for(q = 0; q <= 1; q++){
                 for(r = 0; r <= 1; r++){
                     res = getRes(ss);
                     if(!res){
-                        cout<< p<<" "<<q<<" "<<r<<" "<<res<<" m"<<p<<q<<r<<endl;
-                    }else
-                        cout<< p<<" "<<q<<" "<<r<<" "<<res<<endl;
+                        zeroTable[zeroNum][0] = p;
+                        zeroTable[zeroNum][1] = q;
+                        zeroTable[zeroNum][2] = r;
+                        zeroNum++;
+                    }
+
+                    truthTable[num][0] = p;
+                    truthTable[num][1] = q;
+                    truthTable[num][2] = r;
+                    truthTable[num][3] = res;
+                    num++;
                 }
             }
         }
+
+
+        for(int i = 0; i < 8; i++){
+            for(int j = 0; j < 4; j++){
+                printf("%d ", truthTable[i][j]);
+            }
+            printf("\n");
+        }
+
+
+        print();
+
+    }
+
+    void print(){
+        string sTable[8] = {"(!p)&(!q)&(!r)", "(!p)&(!q)&r", "(!p)&q&(!r)", "(!p)&q&r",
+                           "p&(!q)&(!r)", "p&(!q)&r", "p&q&(!r)", "p&q&r"};
+        for(int i = 0; i < zeroNum; i++){
+            if(i == zeroNum - 1){
+                answer += sTable[4*zeroTable[i][0] + 2*zeroTable[i][1] + zeroTable[i][2]];
+            }else{
+                answer += (sTable[4*zeroTable[i][0] + 2*zeroTable[i][1] + zeroTable[i][2]] + " | ");
+            }
+        }
+        cout<< answer<<endl;
+
     }
 
 private:
     int p, q, r;
     bool res;
+    int truthTable[8][4] ={0};
+    int zeroTable[8][3] = {0};
+    int zeroNum = 0;
+    string answer;
 };
 
 int main()
