@@ -16,10 +16,105 @@ public:
         size = 0;
     }
 
-    bool isEmpty(){
-      if(head->val == 2147483647) return false;
-      else return true;
+    int homeWork1(){
+        Node *tmp = head;
+        Node *tmp2 = head;
+        int min = tmp->val, count = 0;
+        for(; tmp->next != NULL; tmp = tmp->next){
+            if(tmp->val < min){
+                min = tmp->val;
+            }
+        }
+
+        for(tmp = head; tmp->next != NULL; tmp = tmp->next){
+            if(tmp->val == min) {
+                count++;
+            }
+        }
+        cout<< count<<endl;
+        for(int i = 0; i < count; i++){
+            for(tmp = head; tmp->next != NULL; tmp = tmp->next){
+                if(tmp->val == min){
+                    for(tmp2 = head; tmp2->next != NULL; tmp2 = tmp2->next);
+                    tmp->val = tmp2->val;
+                    tmp2 = NULL;
+                    size--;
+
+                }
+            }
+        }
+
+        cout<<"min = "<<min<<endl;
+        return min;
     }
+
+    void testHW1(){
+        insert(0);
+        insert(0);
+        insert(1);
+        insert(1);
+
+        for(int i = 4; i < 10; i++){
+            insert(i);
+        }
+
+        Node* tmp = head;
+        homeWork1();
+        for( int i = 0; i < size; i++){
+            cout<< tmp->val <<endl;
+            tmp = tmp->next;
+        }
+    }
+
+    void testDelete(){
+        Node* tmp = head;
+        insert(1); insert(2); insert(3);
+        linkDelete(2);
+        for(; tmp != NULL; tmp = tmp ->next){
+            cout<< tmp->val <<endl;
+        }
+    }
+
+    void homeWork2(int x){
+        linkDelete(x);
+    }
+
+    void testHW2(){
+        Node* tmp = head;
+        insert(0);
+        insert(0);
+        insert(1);
+        insert(0);
+        insert(1);
+        insert(1);
+        insert(1);
+        for(int i = 5; i < 10; i++){
+            insert(i);
+        }
+        insert(1);
+        linkDelete(1);
+        for(; tmp!=NULL; tmp = tmp->next){
+            cout<< tmp->val << endl;
+        }
+    }
+
+    void homeWork3(int s, int t){
+        for(int i = s; i <= t; i ++){
+            linkDelete(i);
+        }
+    }
+
+    void testHW3(){
+        Node* tmp = head;
+        for(int i = 0; i < 10; i++){
+            insert(i);
+        }
+        homeWork3(4, 9);
+        for(; tmp != NULL; tmp = tmp->next){
+            cout<< tmp->val <<endl;
+        }
+    }
+
     void insert(int x){
         if(head->val == 2147483647) {head->val = x; size++;}
         else{
@@ -35,71 +130,34 @@ public:
 
     // delete as value
     void linkDelete(int i){
-        for(Node* tmp = head; tmp->next != NULL; tmp = tmp->next){
-            if(tmp->next->val == i){
-                Node *pdelete = tmp->next;
-                if(pdelete->next != NULL)
-                    tmp->next = pdelete->next;
+        Node* tmp = head;
+        Node* pdelete;
+
+        for(tmp = head; tmp->next != NULL; ){
+            if(tmp->val == i){
+                pdelete = head;
+                head = tmp->next;
+                tmp = head;
                 delete pdelete;
                 pdelete = NULL;
+                size--;
+            }else if(tmp->next == NULL){
+                pdelete = tmp;
+                delete pdelete;
+                pdelete = NULL;
+                break;
+                size--;
+            }else if(tmp->next->val == i){
+                pdelete = tmp->next;
+                tmp->next = pdelete->next;
+                delete pdelete;
+                pdelete = NULL;
+                size--;
             }else{
-                printf("*** delete wrong, no data in the link list!!");
-            }
-        }
-    }
-    //delete as locate
-    void deleteLocate(int i){
-        Node *tmp = head, *pdelete;
-        if( i == 1){
-            head = tmp->next;
-            delete tmp;
-            tmp = NULL;
-            size--;
-        }else{
-            for(int x = 0; x < i - 2; x++){
                 tmp = tmp->next;
             }
-            pdelete = tmp->next;
-            tmp->next = pdelete->next;
-            delete pdelete;
-            pdelete = NULL;
-            size--;
         }
-    }
-
-    int search(int i){
-        Node *tmp = head;
-        for(int x = 0; x < i - 1; x++){
-            tmp = tmp->next;
-        }
-        return tmp->val;
-    }
-
-    int locate(int i){
-        Node *tmp = head;
-        int x = 0;
-        for(; x < size; x++){
-            if(tmp->val == i){
-                return (x+1);
-            }
-            tmp = tmp->next;
-        }
-        printf("*** not find !!");
-    }
-
-    int getLength(){
-        return size;
-    }
-
-
-    void text(){
-        insert(11);insert(22);insert(33);
-        cout<<head->val <<head->next->val <<head->next->next->val<< size <<endl;
-        linkDelete(22);
-        cout<<head->val <<head->next->val <<endl;
-        deleteLocate(2);
-        if(head->next == NULL)
-            cout<< head->val;
+        return;
     }
 
 private:
@@ -111,6 +169,6 @@ private:
 int main()
 {
     LinkList text;
-    text.text();
+    text.testHW1();
     return 0;
 }

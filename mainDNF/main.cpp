@@ -74,8 +74,7 @@ public:
         }
     }
 
-    void test(){
-        string ss("p|(q&r)");
+    void test(string ss){
         int num = 0;
         for(p = 0; p <= 1; p++){
             for(q = 0; q <= 1; q++){
@@ -104,7 +103,6 @@ public:
             }
             printf("\n");
         }
-
 
         print();
 
@@ -135,7 +133,8 @@ private:
 
 int main()
 {
+    string comeon("(p&q)|r");
     Test1 test;
-    test.test();
+    test.test(comeon);
     return 0;
 }
