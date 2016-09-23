@@ -1,12 +1,13 @@
 #include <iostream>
 using namespace std;
 
-struct re{
+struct re{    // linkList, link the node of HashTable
     int n;
     re* next;
 };
 
 class HashTable{
+    // the struct of HashTable, and the size, the count
 private:
     //node as an Array
     re * node[15];
@@ -15,12 +16,12 @@ private:
     int count ;
 
 public:
-    //why don't you use constructor function but another function??
+    //constructor function
    HashTable(){
         count = 0; size = 15;
         //intalization for 2-dimensions array(pointer)
-        for (int ti=0;ti<15;ti++)
-            node[ti] = new re;
+        for (int ti=0;ti<15;ti++) 
+            node[ti] = new re;  //every node has a head of linkList
         //if(!node) exit(0);
         for(int i = 0; i < size; i++)
         {
@@ -39,7 +40,7 @@ public:
         int t = hash(val);
         //for-loop can be used in this way!!
         for (tmp = node[t]->next;tmp!=NULL;tmp = tmp->next)
-            if (tmp->n==t)
+            if (tmp->n==val)
             {
                 //if data appeared
                 printf("Data Repeated!");
