@@ -4,8 +4,7 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += main.cpp \
-    linklist.cpp \
-    zzz.cpp
+    linklist.cpp
 
 HEADERS += \
     linklist.h
