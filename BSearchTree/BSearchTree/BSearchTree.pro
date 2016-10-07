@@ -4,7 +4,7 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += main.cpp \
-    linklist.cpp
+    bsearchtree.cpp
 
 HEADERS += \
-    linklist.h
+    bsearchtree.h
