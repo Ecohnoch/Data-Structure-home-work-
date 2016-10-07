@@ -1,0 +1,32 @@
+{
+    "hello": {
+        "1": "Good morning",
+        "2": "Good afternoon",
+        "3": "Good evenning"
+    },
+    "tencent": {
+        "1": "Welcome to Tencent",
+        "2": "Are you happy today",
+        "3": "I am hungry now"
+    },
+    "elder": {
+        "1": "Hahahahahah.",
+        "2": "+1s",
+        "3": "Wu ke feng gao!"
+    },
+    "author":{
+        "1": "XCY",
+        "2": "Ecohnoch",
+        "3": "Qishanfengming"
+    },
+    "lalala":{
+        "1": "la your sister!",
+        "2": "blablblabla..",
+        "3": "exm??"
+    },
+    "test":{
+        "1": "test1",
+        "2": "test2",
+        "3": "test3"
+    }
+}
