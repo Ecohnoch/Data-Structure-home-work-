@@ -7,9 +7,12 @@ struct Node{
     int right;
     Node* lChild;
     Node* rChild;
+    Node* parent;
 
     bool color = false; // true is red, false is black
     int m;
+    int size;      //OS-Tree expand
+    int rank;      //Many trees has this expand
 };
 
 class intervalTreeNode
@@ -22,8 +25,11 @@ public:
     void append(Node* node, bool direction, int l, int r);
     void preOrder(Node*);
     int getM(Node* );
+    int getSize(Node* );
+    int getRank(Node* );
 
-
+    void rightRotate(Node* );
+    void leftRotate(Node* );
     void test();
 };
 
