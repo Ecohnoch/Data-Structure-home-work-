@@ -21,9 +21,19 @@ private:
     Node* root;
 
 public:
+    // pre func
     intervalTreeNode();
     void append(Node* node, bool direction, int l, int r);
     void preOrder(Node*);
+    void inOrder();
+
+    //main func
+    void insert(int i);
+    void insert(int l, int r);
+
+
+
+    // aux func
     int getM(Node* );
     int getSize(Node* );
     int getRank(Node* );
@@ -31,6 +41,9 @@ public:
     void rightRotate(Node* );
     void leftRotate(Node* );
     void test();
+    void testInterval();
+    void testRBT();
+
 };
 
 #endif // INTERVALTREENODE_H
