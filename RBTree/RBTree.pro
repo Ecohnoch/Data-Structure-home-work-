@@ -3,8 +3,7 @@ CONFIG += console c++11
 CONFIG -= app_bundle
 CONFIG -= qt
 
-SOURCES += main.cpp \
-    rbtree.cpp
+SOURCES += \
+    rbt.cpp
 
-HEADERS += \
-    rbtree.h
+HEADERS +=

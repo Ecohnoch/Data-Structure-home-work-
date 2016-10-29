@@ -31,6 +31,7 @@ public:
     void insert(int i);
     void insert(int l, int r);
 
+    Node* os_select(Node* , int i);
 
 
     // aux func

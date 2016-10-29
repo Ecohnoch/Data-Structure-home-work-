@@ -274,13 +274,22 @@ void intervalTreeNode::insert(int x){
     }
 
     root->color = false;
+}
 
+Node* os_select(Node* node, i){
+    int r = getSize(node->lChild) + 1;
+    if( i == r)
+        return node;
+    else if(i < r){
+        return os_select(node->lChild, i);
+    }else
+        return os_select(node->rChild, i - r);
 }
 
 
 
 
 void intervalTreeNode::test(){
-    //insert(4);
+    insert(4);
     preOrder(root);
 }
