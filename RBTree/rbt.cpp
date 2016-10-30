@@ -179,7 +179,7 @@ void rbtree<T>::rightRotate( _rbTreeNode<T> *x ){
 template <class T>
 void rbtree<T>::rbInsertFixup( _rbTreeNode<T> *z ){
     while( z->p->color  == true ){
-        if( z->p == z->p->p->left ){
+        if( z->p == z->p->p->left ){  //case A
             _rbTreeNode<T> * y = z->p->p->right;
             if( y->color == true ){
                 z->p->color = false;
@@ -198,7 +198,7 @@ void rbtree<T>::rbInsertFixup( _rbTreeNode<T> *z ){
                 rightRotate( z->p->p );
             }
         }
-        else{
+        else{   // case B
             _rbTreeNode<T> * y = z->p->p->left;
             if( y->color == true ){
                 z->p->color = false;

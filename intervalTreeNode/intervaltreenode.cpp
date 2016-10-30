@@ -4,7 +4,8 @@
 #include "intervaltreenode.h"
 using namespace std;
 
-intervalTreeNode::intervalTreeNode()
+template <class T>
+intervalTreeNode<T>::intervalTreeNode()
 {
       root = new Node;
       root->left = 12;
@@ -16,7 +17,8 @@ intervalTreeNode::intervalTreeNode()
       testRBT();
 }
 
-void intervalTreeNode::testInterval(){
+template <class T>
+void intervalTreeNode<T>::testInterval(){
     append(root,true, 5, 11);
     append(root->lChild, true, 4, 8);
     append(root->lChild, false, 15, 18);
@@ -26,7 +28,8 @@ void intervalTreeNode::testInterval(){
     root->lChild->rChild->lChild->color = true;
 }
 
-void intervalTreeNode::testRBT(){
+template <class T>
+void intervalTreeNode<T>::testRBT(){
     root->left = 11;
     append(root, true, 2, 2);
     root->lChild->color = true;
@@ -42,9 +45,9 @@ void intervalTreeNode::testRBT(){
 }
 
 
-
-void intervalTreeNode::append(Node *node, bool direction, int l, int r){
-    Node* tmp = new Node;
+template <class T>
+void intervalTreeNode<T>::append(Node<T> *node, bool direction, int l, int r){
+    Node<T>* tmp = new Node<T>;
     tmp->left = l;
     tmp->right = r;
     tmp->m = r;
@@ -55,7 +58,8 @@ void intervalTreeNode::append(Node *node, bool direction, int l, int r){
     else node->rChild = tmp;
 }
 
-void intervalTreeNode::preOrder(Node* node){
+template <class T>
+void intervalTreeNode<T>::preOrder(Node<T>* node){
     cout<< node->left<<" "<< node->right<<" color: "<< (node->color?"red":"black") <<endl;
     if(node->lChild != NULL)
         preOrder(node->lChild);
@@ -63,8 +67,9 @@ void intervalTreeNode::preOrder(Node* node){
         preOrder(node->rChild);
 }
 
-void intervalTreeNode::inOrder(){
-    stack<Node*> s;
+template <class T>
+void intervalTreeNode<T>::inOrder(){
+    stack<Node<T>*> s;
     stack<int> sv;
     Node* tmp = root;
     int tRank = 0;
@@ -86,7 +91,8 @@ void intervalTreeNode::inOrder(){
     }
 }
 
-int intervalTreeNode::getM(Node *node){
+template <class T>
+int intervalTreeNode<T>::getM(Node<T> *node){
     if(node == NULL)
         return -1;
     else{
@@ -100,7 +106,8 @@ int intervalTreeNode::getM(Node *node){
     }
 }
 
-int intervalTreeNode::getSize(Node *node){
+template <class T>
+int intervalTreeNode<T>::getSize(Node<T> *node){
     if(node == NULL)
         return -1;
     else{
@@ -117,7 +124,8 @@ int intervalTreeNode::getSize(Node *node){
     }
 }
 
-int intervalTreeNode::getRank(Node *node){
+template <class T>
+int intervalTreeNode<T>::getRank(Node<T> *node){
     if(node == NULL)
         return -1;
     else{
@@ -137,8 +145,8 @@ int intervalTreeNode::getRank(Node *node){
     }
 }
 
-
-void intervalTreeNode::leftRotate(Node *node){
+template <class T>
+void intervalTreeNode<T>::leftRotate(Node<T> *node){
     if(node->rChild == NULL)
         cout<< "***Error when left rotate!"<<endl;
     else{
@@ -158,8 +166,8 @@ void intervalTreeNode::leftRotate(Node *node){
     }
 }
 
-
-void intervalTreeNode::rightRotate(Node *node){
+template <class T>
+void intervalTreeNode<T>::rightRotate(Node<T> *node){
     if(node->lChild == NULL)
         cout<< "***Error when right rotate"<<endl;
     else{
@@ -179,8 +187,9 @@ void intervalTreeNode::rightRotate(Node *node){
     }
 }
 
-void intervalTreeNode::insert(int x){
-    Node* tmp = root;
+template <class T>
+void intervalTreeNode<T>::insert(int x){
+    Node<T>* tmp = root;
     bool direction = false;  // true -> left, false -> right;
     while(1){
         if(tmp->left >= x){
@@ -197,7 +206,7 @@ void intervalTreeNode::insert(int x){
                 tmp = tmp->rChild;
         }
     }
-    Node* node = new Node;
+    Node<T>* node = new Node<T>;
     node->left = x;
     node->lChild = NULL;
     node->rChild = NULL;
@@ -208,75 +217,12 @@ void intervalTreeNode::insert(int x){
         tmp->rChild = node;
     node->parent = tmp;
     // ↑ find the position , and insert it;
+    rbInsertFixUp(tmp);
 
-    //case A
-    if(node->parent == NULL)
-        root = node;
-
-    while(node->parent->color){
-
-        if(node->parent->parent == NULL){
-            if(node->parent->lChild == node){
-                if(node->parent->rChild->color == false){
-                    node->parent->lChild->color = false;
-                }else
-                    node->parent->lChild->color = true;
-            }else{
-                if(node->parent->lChild->color == false){
-                    node->parent->rChild->color = false;
-                }else
-                    node->parent->rChild->color = true;
-            }
-        }
-
-
-        if(node->parent->parent->lChild == node->parent){
-            if(node->parent->parent->rChild == NULL || node->parent->parent->rChild->color){
-                node->parent->parent->color = true;
-                node->parent = false;
-                if(node->parent->parent->rChild != NULL)
-                    node->parent->parent->rChild = false;
-                node = node->parent->parent;
-            }else{
-                if(node->parent->rChild == node){
-                    node = node->parent;
-                    leftRotate(node);
-                }else
-                    node = node->parent;
-                node->color = false;
-                node->lChild->color = true;
-                node->parent->color = true;
-                rightRotate(node->parent);
-                node->lChild->color = true;
-                node->rChild->color = true;
-            }
-        }else{
-            if(node->parent->parent->lChild == NULL || node->parent->parent->lChild->color){
-                node->parent->parent->color = true;
-                node->parent = false;
-                if(node->parent->parent->lChild != NULL)
-                    node->parent->parent->lChild = false;
-                node = node->parent->parent;
-            }else{
-                if(node->parent->lChild == node){
-                    node = node->parent;
-                    rightRotate(node);
-                }else
-                    node = node->parent;
-                node->color = false;
-                node->rChild->color = true;
-                node->parent->color = true;
-                leftRotate(node->parent);
-                node->rChild->color = true;
-                node->lChild->color = true;
-            }
-        }
-    }
-
-    root->color = false;
 }
 
-Node* os_select(Node* node, i){
+template <class T>
+Node<T>* os_select(Node<T>* node, i){
     int r = getSize(node->lChild) + 1;
     if( i == r)
         return node;
@@ -286,10 +232,55 @@ Node* os_select(Node* node, i){
         return os_select(node->rChild, i - r);
 }
 
+template <class T>
+void intervalTreeNode<T>::rbInsertFixUp(Node<T> *z){
+    while( z->p->color  == true ){
+        if( z->p == z->p->p->left ){  //case A
+            _rbTreeNode<T> * y = z->p->p->right;
+            if( y->color == true ){
+                z->p->color = false;
+                y->color = false;
+                z->p->p->color = true;
+                z = z->p->p;
+            }
+            else{
+                if( z == z->p->right ){
+                    z = z->p;
+                    leftRotate( z );
+                }//
+                z->p->color = false;
+                z->p->p->color = true;
+                z->p->right->color = false;
+                rightRotate( z->p->p );
+            }
+        }
+        else{   // case B
+            _rbTreeNode<T> * y = z->p->p->left;
+            if( y->color == true ){
+                z->p->color = false;
+                y->color = false;
+                z->p->p->color = true;
+                z = z->p->p;
+            }
+            else{
+                if( z == z->p->left ){
+                    z = z->p;
+                    rightRotate( z );
+                }
+                z->p->color = false;
+                z->p->p->color = true;
+                z->p->left->color = false;
+                leftRotate( z->p->p );
+            }
+        }
+    }
+    root->color = false;
+}
 
 
 
-void intervalTreeNode::test(){
+template <class T>
+void intervalTreeNode<T>::test(){
     insert(4);
     preOrder(root);
 }
