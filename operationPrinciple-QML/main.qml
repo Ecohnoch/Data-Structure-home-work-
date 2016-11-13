@@ -13,7 +13,7 @@ ApplicationWindow {
             title: "方法"
             MenuItem{text: "进制转换"; onTriggered: {mainLoader.source = "HexConverter.qml"}}
             MenuItem{text: "有符号数表示"; onTriggered: {mainLoader.source = "SignedNumber.qml"}}
-            MenuItem{text: "浮点表示"; onTriggered: {}}
+            MenuItem{text: "浮点表示"; onTriggered: {mainLoader.source = "SignedPlusAndSub.qml"}}
             MenuItem{text: "IEEE754标准"; onTriggered: {}}
             MenuItem{text: "加减法运算"; onTriggered: {}}
             MenuItem{text: "乘除法运算"; onTriggered: {}}

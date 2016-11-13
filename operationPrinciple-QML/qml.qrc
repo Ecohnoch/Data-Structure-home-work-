@@ -5,5 +5,7 @@
         <file>HexConverterLabel.qml</file>
         <file>SignedNumber.qml</file>
         <file>SignedNumberLabel.qml</file>
+        <file>SignedPlusAndSub.qml</file>
+        <file>SignedPlusAndSubLabel.qml</file>
     </qresource>
 </RCC>
