@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>HexConverter.qml</file>
+        <file>HexConverterLabel.qml</file>
+        <file>SignedNumber.qml</file>
+        <file>SignedNumberLabel.qml</file>
+    </qresource>
+</RCC>

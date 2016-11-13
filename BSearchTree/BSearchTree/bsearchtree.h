@@ -23,7 +23,14 @@ public:
     void remove(int x);
     bool search(int x);
 
-    void order(Node* h);
+    void preOrder(Node* h);
+    void preOrder2(Node* h);
+    void inOrder(Node* h);
+    void inOrder2(Node *h);
+    void postOrder(Node *h);
+    void postOrder2(Node* h);
+
+    void levelOrder(Node* h);
     void test();
 private:
     int count;
