@@ -38,6 +38,7 @@ Item {
         anchors.top: bitName.top
         width: 50; height: 40
         radius: 4
+        visible: name === 0 ? true : false
         border.width: 3
         border.color: "#888"
         color: "transparent"
@@ -60,6 +61,7 @@ Item {
             onEntered: {background.visible = true; background.opacity = 0.3}
             onExited: {background.opacity = 0; background.visible = false}
             onClicked:  myClicked(name)
+            cursorShape: Qt.ArrowCursor
         }
     }
     function zhenZhi(str){

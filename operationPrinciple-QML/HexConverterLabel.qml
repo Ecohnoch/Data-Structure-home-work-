@@ -60,6 +60,7 @@ Item {
             onEntered: {background.visible = true; background.opacity = 0.3}
             onExited: {background.opacity = 0; background.visible = false}
             onClicked:  myClicked(name)
+            cursorShape: Qt.ArrowCursor
         }
     }
 

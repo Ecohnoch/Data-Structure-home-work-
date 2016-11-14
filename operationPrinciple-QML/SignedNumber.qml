@@ -4,10 +4,10 @@ import QtQuick.Controls 1.4
 Item {
     anchors.fill: parent
     SignedNumberLabel{id: label0; name: 0; x: 20; y:  20}   //2
-    SignedNumberLabel{id: label1; name: 1; x: 20; y:  90; enabled: false}   //4
-    SignedNumberLabel{id: label2; name: 2; x: 20; y: 160; enabled: false}   //8
-    SignedNumberLabel{id: label3; name: 3; x: 20; y: 230; enabled: false}   //16
-    SignedNumberLabel{id: label4; name: 4; x: 20; y: 330; enabled: false}   //10
+    SignedNumberLabel{id: label1; name: 1; x: 20; y:  90}   //4
+    SignedNumberLabel{id: label2; name: 2; x: 20; y: 160}   //8
+    SignedNumberLabel{id: label3; name: 3; x: 20; y: 230}   //16
+    SignedNumberLabel{id: label4; name: 4; x: 20; y: 330}   //10
 
     Text{
         id: signal
