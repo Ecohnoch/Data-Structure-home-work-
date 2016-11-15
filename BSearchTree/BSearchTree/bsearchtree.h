@@ -32,6 +32,8 @@ public:
 
     void levelOrder(Node* h);
     void test();
+
+    Node* getRoot(){return root;}
 private:
     int count;
     Node* root;

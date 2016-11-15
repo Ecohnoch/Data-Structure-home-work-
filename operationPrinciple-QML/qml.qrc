@@ -7,5 +7,10 @@
         <file>SignedNumberLabel.qml</file>
         <file>SignedPlusAndSub.qml</file>
         <file>SignedPlusAndSubLabel.qml</file>
+        <file>TrueCodeOneMul.qml</file>
+        <file>TrueCodeOneMulLabel.qml</file>
+        <file>TrueCodeTwoMul.qml</file>
+        <file>TrueCodeTwoMulLabel.qml</file>
+        <file>TrueCodeTwoTag.qml</file>
     </qresource>
 </RCC>

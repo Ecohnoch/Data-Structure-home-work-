@@ -28,6 +28,7 @@ Item {
         anchors.left: button.right
         anchors.leftMargin: 15
         anchors.top: inputFirst.top
+        text: "请在前面输入原码"
         enabled: false
     }
 
@@ -65,58 +66,170 @@ Item {
         }
     }
     function myClicked(){
-        var number1 = inputFirst.text, number2 = inputNext.text
-        var operator = comb.currentText
-        var len1 = number1.length, len2 = number2.length
-        console.log(number1, number2, operator, len1, len2)
-        if(len1 <= len2){
-            var dist = len2 - len1
-            if(number1.charAt(1) === ","){
-                var newStr = number1.substring(0, 2)
-                for(var time = 0; time < dist; time ++){
-                    newStr = newStr + "0"
-                }
-                newStr = newStr + number1.substring(2, len1)
-                number1 = newStr
-                len1 = len2
-            }
-        }else{
-            var dist2 = len1 - len2
-            if(number2.charAt(1) === ","){
-                var newStr2 = number2.substring(0, 2)
-                for(var time2 = 0; time2 < dist2; time2 ++){
-                    newStr2 = newStr2 + "0"
-                }
-                newStr2 = newStr2 + number2.substring(2, len2)
-                number2 = newStr2
-                len2 = len1
-            }
+        if(inputFirst.text.charAt(1) === "," && comb.currentText === "+"){
+            intPlus(inputFirst.text, inputNext.text)
+        }else if(inputFirst.text.charAt(1) === "," && comb.currentText === "-"){
+            intSub(inputFirst.text, inputNext.text)
+        }else if(inputFirst.text.charAt(1) === "." && comb.currentText === "+"){
+            decPlus(inputFirst.text, inputNext.text)
+        }else if(inputFirst.text.charAt(1) === "." && comb.currentText === "-"){
+            decSub(inputFirst.text, inputNext.text)
         }
-        if(operator === "+"){
-            var temp = ""
-            var lastCon = "" //一个常量,全都是0, 为了方便while循环的展开条件
-            var res = ""
-            for(var i = 0; i < len1; i++){
-                lastCon = lastCon + "0"
-
-                if(number1.charAt(i) === "0" && number2.charAt(i) === "0"){
-                    res = res + "0"
-                }else if(number1.charAt(i) === "0" && number2.charAt(i) === "1"){
-                    res = res + "1"
-                }else if(number1.charAt(i) === "1" && number2.charAt(i) === "0"){
-                    res = res + "1"
-                }else if(number1.charAt(i) === "1" && number2.charAt(i) === "1"){
-                    res = res + "1"
-                }else if(number1.charAt(i) === "," && number2.charAt(i) === ","){
-                    res = res + ""
-                }// 二进制的加法, 接下来要做的就是正常的二进制加减逻辑写
-            }
-
-
-
-        }
-
-        console.log("handled: ", number1, number2)
     }
 
+    function intPlus(number1, number2){
+        number1 = getBu(number1)
+        number2 = getBu(number2)
+        console.log("Bu: YES", number1, number2)
+        var len = number1.length
+        var i = 0
+        var tempStr = "0"  //补位的一个临时变量
+        if(number1.charAt(0) === "1" && number2.charAt(0) === "1")
+            tempStr = "1"
+        var endLoop = "" //tempStr结束循环的条件
+        var res = ""      //最后除了符号位的结果
+        for(i = 0; i < len; i++){ // 补位要多一位
+            if(i === 1) {res = res + ","; tempStr = tempStr + ","}
+            else {res = res + "0"; tempStr = tempStr + "0"}
+        }
+        endLoop = tempStr
+        for(i = len - 1; i >= 0; i--){
+            if(i === 1) {}
+            else{
+                if(number1.charAt(i) === "0" && number2.charAt(i) === "1"){
+                    res = res.substring(0, i) + "1" + res.substring(i + 1, len)
+                }else if(number1.charAt(i) === "1" && number2.charAt(i) === "0"){
+                    res = res.substring(0, i) + "1" + res.substring(i + 1, len)
+                }else if(number1.charAt(i) === "0" && number2.charAt(i) === "0"){
+                    res = res.substring(0, i) + "0" + res.substring(i + 1, len)
+                }else if(number1.charAt(i) === "1" && number2.charAt(i) === "1"){
+                    if(tempStr.charAt(i) !== ",")
+                        tempStr = tempStr.substring(0, i) + "1" + tempStr.substring(i + 1, len + 1)
+                    else{
+                        tempStr = "01," + tempStr.substring(3, len + 1)
+                    }
+                }
+            }
+        }
+        console.log("res: ", res, "tempStr: ", tempStr)
+        while(tempStr !== endLoop){
+            var length = res.length
+            for(i = length - 1; i >= 2; i--){
+                if(res.charAt(i) === "0" && tempStr.charAt(i + 1) === "0"){
+                    res = res.substring(0, i) + "0" + res.substring(i + 1, length)
+                }else if(res.charAt(i) === "0" && tempStr.charAt(i + 1) === "1"){
+                    res = res.substring(0, i) + "1" + res.substring(i + 1, length)
+                    tempStr = tempStr.substring(0, i + 1) + "0" + tempStr.substring(i + 2, length + 1)
+                }else if(res.charAt(i) === "1" && tempStr.charAt(i + 1) === "0"){
+                    res = res.substring(0, i) + "1" + res.substring(i + 1, length)
+                }else if(res.charAt(i) === "1" && tempStr.charAt(i + 1) === "1" ){
+                    res = res.substring(0, i) + "0" + res.substring(i + 1, length)
+                    tempStr = tempStr.substring(0, i + 1) + "0" + tempStr.substring(i + 2, length + 1)
+                    if(tempStr.charAt(i) !== ","){
+                        tempStr = tempStr.substring(0, i) + "1" + tempStr.substring(i + 1, length + 1)
+                        console.log("Debug+ ", i, tempStr, res)
+                    }else{
+                        tempStr = tempStr.charAt(0) + "1," + tempStr.substring(3, length + 1)
+                        console.log("Debug++ ", i, tempStr, res)
+                    }
+                }
+            }
+            if(res.charAt(0) === "1" && tempStr.charAt(1) === "1"){  //判断tempStr最高位是否为1
+                tempStr = "1" + tempStr.substring(1, tempStr.length)
+            }
+
+            var endLoop2 = ""
+            for(i = 0; i < length - 2; i++){ //判断是否能够终止大循环while
+                endLoop2 = endLoop2 + "0"
+            }
+            if(tempStr.substring(3, length + 1) === endLoop2){
+                if(tempStr.charAt(1) === "0") res = "0," + res.substring(2, length)
+                else res = "1," + res.substring(2, length)
+                console.log("end: ", res, tempStr)
+                break
+            }
+            console.log("in loops: ", res, tempStr)
+        }
+        console.log("Final Res: ", res)
+        if(tempStr.charAt(0) !== tempStr.charAt(1)){  //判断是否溢出
+            output.text = "Over Flow"
+            return "Over Flow"
+        }
+
+        output.text =  res  //输出结果
+        return res
+        //机组 P238, 例6.9, 已经完成到求出来了第一轮temp和res
+        //     1,1011
+        //     1,0111
+
+        //res: 0,1100
+        //tmp:10,0110
+
+        //res: 0,1010
+        //tmp:10,1000
+
+        //res: 0,0010
+        //tmp:11,0000
+
+        //res: 0,0010
+        //tmp: 0,0000 //弹出符号位
+
+    }
+
+    function intSub(number1, number2){
+        if(number2.charAt(0) === "0") number2 = "1" + number2.substring(1, number2.length)
+        else number2 = "0" + number2.substring(1, number2.length)
+        output.text = intPlus(number1, number2)
+    }
+    function decPlus(number1, number2){
+        number1 = number1.charAt(0) + "," + number1.substring(2, number1.length)
+        number2 = number2.charAt(0) + "," + number2.substring(2, number2.length)
+        var res = intPlus(number1, number2)
+        res = res.charAt(0) + "." + res.substring(2, res.length)
+        output.text = res
+    }
+    function decSub(number1, number2){
+        number1 = number1.charAt(0) + "," + number1.substring(2, number1.length)
+        if(number2.charAt(0) === "0")
+            number2 = "1," + number2.substring(2, number2.length)
+        else
+            number2 = "0," + number2.substring(2, number2.length)
+        var res = intPlus(number1, number2)
+        res = res.charAt(0) + "." + res.substring(2, res.length)
+        output.text = res
+    }
+
+    //AUX function
+    function getBu(yuan){
+        var bu
+        if(yuan.charAt(0) === "0") bu = yuan
+        else{
+            bu = yuan.substring(0, 2)
+            for(var ii = 2; ii < yuan.length; ii++){
+                if(yuan.charAt(ii) === "0") bu = bu + "1"
+                else bu = bu + "0"
+            }
+            var oneLen = 0
+            for(var lastBits = bu.length - 1; lastBits > 1; lastBits--){
+                if(bu.charAt(lastBits) === "1") oneLen++
+                else break
+            }
+            if(bu.charAt(bu.length - oneLen) === "," || bu.charAt(bu.length - oneLen) === "."){
+                var buLen = bu.length
+                bu = bu.substring(0, 2)
+                bu = bu + "1"
+                for(var t = 0; t < buLen; t++){
+                    bu = bu + "0"
+                }
+            }else{
+                var changeLast = bu.length - 1
+                bu = bu.substring(0, bu.length - oneLen - 1)
+                bu = bu + "1"
+                for(; changeLast >= bu.length - oneLen; changeLast--){
+                    bu = bu + "0"
+                }
+            }
+        }
+        return bu
+    }
 }

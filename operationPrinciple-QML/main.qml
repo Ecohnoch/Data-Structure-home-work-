@@ -14,9 +14,9 @@ ApplicationWindow {
             title: "方法"
             MenuItem{text: "进制转换"; onTriggered: {mainLoader.source = "HexConverter.qml"}}
             MenuItem{text: "有符号数表示"; onTriggered: {mainLoader.source = "SignedNumber.qml"}}
-            MenuItem{text: "二进制加减法"; onTriggered: {mainLoader.source = "SignedPlusAndSub.qml"}}
-            MenuItem{text: "原码一位乘"; onTriggered: {}}
-            MenuItem{text: "原码二位乘"; onTriggered: {}}
+            MenuItem{text: "定点补码加减法"; onTriggered: {mainLoader.source = "SignedPlusAndSub.qml"}}
+            MenuItem{text: "原码一位乘"; onTriggered: {mainLoader.source = "TrueCodeOneMul.qml"}}
+            MenuItem{text: "原码二位乘"; onTriggered: {mainLoader.source = "TrueCodeTwoMul.qml"}}
             MenuItem{text: "补码一位乘"; onTriggered: {}}
             MenuItem{text: "补码两位乘"; onTriggered: {}}
         }
