@@ -38,9 +38,11 @@ int getDepth(Node* root){
 
 bool isAVL(Node* root){
     if(!isBST(root)) return false;
+
     if(root == NULL) return true;
     if(!isAVL(root->lChild)) return false;
     if(!isAVL(root->rChild)) return false;
+
     int lDepth = getDepth(root->lChild), rDepth = getDepth(root->rChild);
     if(lDepth - rDepth > 1 || rDepth - lDepth > 1){
         return false;
@@ -54,15 +56,8 @@ bool isAVL(Node* root){
 int main()
 {
     BSearchTree tree;
-    tree.insert(11);
-    tree.insert(22);
-    tree.insert(7);
-    tree.insert(5);
-    tree.insert(4);
-    tree.insert(33);
-    tree.insert(44);
-    tree.insert(13);
-    tree.insert(8);
+    tree.test();
+
     cout<< isAVL(tree.getRoot()) <<endl;
     return 0;
 }

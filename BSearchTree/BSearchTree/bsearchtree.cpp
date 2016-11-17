@@ -7,6 +7,7 @@ void BSearchTree::insert(int x){
     if(root->val == 1000){
         root->val = x;
         count = 1;
+        root->parent = NULL;
     }else{
         Node* tmp = root;
         while(tmp != NULL){
@@ -17,6 +18,7 @@ void BSearchTree::insert(int x){
                     tmp2->lChild = NULL;
                     tmp2->rChild = NULL;
                     tmp->rChild = tmp2;
+                    tmp2->parent = tmp;
                     break;
                 }
                 tmp = tmp->rChild;
@@ -28,6 +30,7 @@ void BSearchTree::insert(int x){
                     tmp2->lChild = NULL;
                     tmp2->rChild = NULL;
                     tmp->lChild = tmp2;
+                    tmp2->parent = tmp;
                     break;
                 }
                 tmp = tmp->lChild;
@@ -36,7 +39,80 @@ void BSearchTree::insert(int x){
     }
 }
 void BSearchTree::remove(int x){
-
+    Node* tmp = root;
+    while(tmp != NULL){
+        if(x == tmp->val)
+            break;
+        else if(x > tmp->val){
+            tmp = tmp->rChild;
+        }else if(x < tmp->val){
+            tmp = tmp->lChild;
+        }
+    }
+//case 1 no children
+    if(tmp->lChild == NULL && tmp->rChild == NULL){
+        if(tmp->parent->lChild == tmp){
+            tmp->parent->lChild = NULL;
+        }else{
+            tmp->parent->rChild = NULL;
+        }
+        delete tmp;
+    }
+// case2
+//       o
+//     o<-
+//       o
+    if(tmp->lChild == NULL && tmp->rChild != NULL){
+        if(tmp->parent->lChild == tmp){
+            tmp->parent->lChild = tmp->rChild;
+        }else{
+//case3
+//      o
+//        o <--
+//          o
+            tmp->parent->rChild = tmp->rChild;
+        }
+        delete tmp;
+    }
+//case4
+//     o
+//    o <--
+//   o
+//
+    if(tmp->lChild != NULL && tmp->rChild == NULL){
+        if(tmp->parent->lChild == tmp){
+            tmp->parent->lChild = tmp->lChild;
+        }else{
+//case5
+//     o
+//       o <---
+//     o
+            tmp->parent->rChild = tmp->lChild;
+        }
+        delete tmp;
+    }
+//case 6
+//     o
+//    o<---
+//   o  o
+    if(tmp->lChild != NULL && tmp->rChild != NULL){
+        if(tmp->parent->lChild == tmp){
+            tmp->parent->lChild = tmp->rChild;
+            Node* root2 = tmp->rChild;
+            while(root2->lChild != NULL) {root2 = root2->lChild;}
+            root2->lChild = tmp->lChild;
+        }else{
+//case 7
+//    o
+//      o<----
+//    o   o
+            tmp->parent->rChild = tmp->lChild;
+            Node* root3 = tmp->lChild;
+            while(root3->rChild != NULL) {root3 = root3->rChild;}
+            root3->rChild = tmp->rChild;
+        }
+        delete tmp;
+    }
 }
 
 void BSearchTree::preOrder(Node* h){
@@ -159,12 +235,45 @@ bool BSearchTree::search(int x){
     return false;
 }
 
+/*
+    PreIndex: 前序序列字符串中子树的第一个节点在PreArray[]中的下标
+    InIndex:  中序序列字符串中子树的第一个节点在InArray[]中的下标
+    subTreeLen: 子树的字符串序列的长度
+    PreArray： 先序序列数组
+    InArray：中序序列数组
+*/
+void PreInCreateTree(Node* root,int PreIndex,int InIndex,int subTreeLen){
+    //subTreeLen < 0 子树为空
+    if(subTreeLen <= 0){
+        root = NULL;
+        return;
+    }
+    else{
+        root = new Node;
+        //创建根节点
+        root->val = PreArray[PreIndex];
+        //找到该节点在中序序列中的位置
+        int index = strchr(InArray,PreArray[PreIndex]) - InArray;
+        //左子树结点个数
+        int LenF = index - InIndex;
+        //创建左子树
+        PreInCreateTree(T->lchild,PreIndex + 1,InIndex,LenF);
+        //右子树结点个数(总结点 - 根节点 - 左子树结点)
+        int LenR = subTreeLen - 1 - LenF;
+        //创建右子树
+        PreInCreateTree(T->rchild,PreIndex + LenF + 1,index + 1,LenR);
+    }
+}
+
+
+
+
 void BSearchTree::test(){
     insert(11);insert(22);insert(13);insert(35);
-    insert(21);insert(7);
+    insert(21);insert(7);insert(32);insert(40);
+    remove(22);
 
-    //     11
-    //
+
     levelOrder(root);
     cout<<endl;
 

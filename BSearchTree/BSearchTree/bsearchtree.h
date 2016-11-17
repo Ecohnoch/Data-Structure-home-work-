@@ -7,6 +7,7 @@ struct Node{
     int val;
     Node* lChild;
     Node* rChild;
+    Node* parent;
 };
 
 class BSearchTree{
@@ -32,6 +33,8 @@ public:
 
     void levelOrder(Node* h);
     void test();
+
+    void preInGetTree(int* pre, int* in, Node* r, Node* tmp);
 
     Node* getRoot(){return root;}
 private:
