@@ -66,82 +66,192 @@ Item {
         }
     }
     function myClicked(){
-//        console.log("Do Clicked!")
-//        flagChanged(inputFirst.text)
-        plus(inputFirst.text, inputNext.text)
+        var number = inputFirst.text
+        var number2 = inputNext.text
+        var len1 = number.length + 2
+        var len2 = number.length - 2
+        var tag1 = getBu("0" + number.substring(1, number.length))
+        var plus = hexMul("0" + number.substring(1, number.length), "0" + number.substring(1, number.length))
+        var tag2 = plus.charAt(0) + number.charAt(1) + plus.substring(1, plus.length)
+        var tag3 = getBu("1" + number.substring(1, number.length))
+        tag.changeTextField(1, tag1)
+        tag.changeTextField(2, tag2)
+        tag.changeTextField(3, tag3)
+        tag1 = "00" + tag1
+        tag2 = "00" + tag2
+        tag3 = "11" + tag3
+        var res = ""
+        for(var j = 0; j < len1; ++j){
+            if(j === 3) res = res + number.charAt(1)
+            else res = res + "0"
+        }
+
+        res = res + "00" +number2.substring(2, number2.length)
+        var resLen = res.length
+
+        var time = Math.ceil((number2.length - 2) / 2)
+        var flag = getFlag(res, "0")
+        var i = 0
+        var tmp = ""
+        console.log("Debug++ ", number, res, flag, time, res.substring(resLen - 2, resLen) + flag)
+        for(i = 0; i < time; ++i){
+            if(res.substring(resLen - 2, resLen) + flag === "000" || res.substring(resLen - 2, resLen) + flag === "111"){
+                flag = getFlag(res, flag)
+                res = rightMove(res)
+                res = rightMove(res)
+
+
+                console.log("Debug++ ", res, flag)
+            }else if(res.substring(resLen - 2, resLen) + flag === "001" || res.substring(resLen - 2, resLen) + flag === "010"){
+                flag = getFlag(res, flag)
+                tmp = hexMul(res.substring(0, len1).substring(0, 3)+res.substring(4, len1), tag1.substring(0,3) + tag1.substring(4, tag1.length))
+
+                tmp = tmp.substring(0,3) + res.charAt(3) + tmp.substring(3, tmp.length)
+                res = tmp + res.substring(len1, resLen)
+
+                res = rightMove(res)
+                res = rightMove(res)
+
+                console.log("Debug++x ", res, flag)
+            }else if(res.substring(resLen - 2, resLen) + flag === "011" || res.substring(resLen - 2, resLen) + flag === "100"){
+                flag = getFlag(res, flag)
+                tmp = hexMul(res.substring(0, len1).substring(0, 3)+res.substring(4, len1), tag2.substring(0, 3) + tag2.substring(4, tag2.length))
+                tmp = tmp.substring(0, 3) + res.charAt(3) + tmp.substring(3, tmp.length)
+                res = tmp + res.substring(len1, resLen)
+                res = rightMove(res)
+                res = rightMove(res)
+
+                console.log("Debug++2 ", res, flag)
+            }else if(res.substring(resLen - 2, resLen) + flag === "101" || res.substring(resLen - 2, resLen) + flag === "110"){
+                flag = getFlag(res, flag)
+                tmp = hexMul(res.substring(0, len1).substring(0, 3)+res.substring(4, len1), tag3.substring(0, 3) + tag3.substring(4, tag3.length))
+                tmp = tmp.substring(0, 3) + res.charAt(3) + tmp.substring(3, tmp.length)
+                res = tmp + res.substring(len1, resLen)
+                res = rightMove(res, 1)
+                res = rightMove(res, 1)
+                console.log("Debug++-x ", res, flag)
+            }
+
+            console.log("In loop: ", res)
+        }
+
+        console.log("Out loop: ", res.substring(res.length - 2, res.length) + flag)
+        if(res.substring(res.length - 2, res.length) + flag === "000" || res.substring(res.length - 2, res.length) + flag === "111"){
+            flag = getFlag(res, flag)
+            console.log("Debug++ ", res, flag)
+        }else if(res.substring(res.length - 2, res.length) + flag === "001" || res.substring(res.length - 2, res.length) + flag === "010"){
+            flag = getFlag(res, flag)
+            tmp = hexMul(res.substring(0, len1).substring(0, 3)+res.substring(4, len1), tag1.substring(0,3) + tag1.substring(4, tag1.length))
+            console.log("Fuck", tmp)
+            if(tmp.length === len1) tmp = tmp.substring(1, tmp.length)
+            tmp = tmp.substring(0,3) + res.charAt(3) + tmp.substring(3, tmp.length)
+            res = tmp + res.substring(len1, res.length)
+
+            console.log("Debug++x ", res, flag)
+        }else if(res.substring(res.length- 2, res.length) + flag === "011" || res.substring(res.length - 2, res.length) + flag === "100"){
+            flag = getFlag(res, flag)
+            tmp = hexMul(res.substring(0, len1).substring(0, 3)+res.substring(4, len1), tag2.substring(0, 3) + tag2.substring(4, tag2.length))
+            if(tmp.length === len1) tmp = tmp.substring(1, tmp.length)
+            tmp = tmp.substring(0, 3) + res.charAt(3) + tmp.substring(3, tmp.length)
+            res = tmp + res.substring(len1, res.length)
+
+            console.log("Debug++2 ", res, flag)
+        }else if(res.substring(res.length - 2, res.length) + flag === "101" || res.substring(res.length - 2, res.length) + flag === "110"){
+            flag = getFlag(res, flag)
+            tmp = hexMul(res.substring(0, len1).substring(0, 3)+res.substring(4, len1), tag3.substring(0, 3) + tag3.substring(4, tag3.length))
+            if(tmp.length === len1) tmp = tmp.substring(1, tmp.length)
+            tmp = tmp.substring(0, 3) + res.charAt(3) + tmp.substring(3, tmp.length)
+            res = tmp + res.substring(len1, resLen)
+            console.log("Debug++-x ", res, flag)
+        }
+
+        if(number.charAt(0) === number2.charAt(0)){
+            res = "0" + number.charAt(1) + res.substring(4, res.length - 2)
+        }else{
+            res = "1" + number.charAt(1) + res.substring(4, res.length - 2)
+        }
+
+        output.text = res
+
+
     }
 
     // aux function
-    function rightMove(number){
-        var bu = getBu(number)
-
-    }
-
-    function flagChanged(number){
-        tag.changeTextField(1, getBu(number))
-        tag.changeTextField(2, plus(number,number))
-        tag.changeTextField(3, (number.charAt(0) === "0")?"1":"0" + number.substring(1, number.length))
-    }
-
-    function plus(number1, number2){
-        var tmp = "", res = ""
-        var i = 0, len = number1.length
-        for(i = 0; i <= len; ++i){
-            tmp = tmp + "0"
-            res = res + "0"
-        }
-
-        for(i = len - 1; i >= 0; --i){
-            if(number1.charAt(i) === "0" && number2.charAt(i) ==="0"){
-                res = charChange(res, i+1, "0")
-                tmp = charChange(tmp, i+1, "0")
-            }else if(number1.charAt(i) === "0" && number2.charAt(i) === "1"){
-                res = charChange(res, i+1, "1")
-                tmp = charChange(tmp, i+1, "0")
-            }else if(number1.charAt(i) === "1" && number2.charAt(i) === "0"){
-                res = charChange(res, i+1, "1")
-                tmp = charChange(tmp, i+1, "0")
-            }else if(number1.charAt(i) === "1" && number2.charAt(i) === "1"){
-                res = charChange(res, i+1, "0")
-                tmp = charChange(tmp, i, "1")
+    function getFlag(number, f){
+        var flag = "0"
+        if(f === "0"){
+            if(number.charAt(number.length - 1) === "1" && number.charAt(number.length - 2) === "1"){
+                flag = "1"
+            }else{
+                flag = "0"
+            }
+        }else{
+            if(number.charAt(number.length - 2 === "0")){
+                flag = "0"
+            }else{
+                flag = "1"
             }
         }
-        console.log("tmp, res: ", tmp, res)
-        var endLoop = ""
-        for(i = 0; i <= len; ++i){
-            endLoop = endLoop + "0"
+
+        return flag
+    }
+
+    function rightMove(number, f){
+        var res = ""
+        var oper = number.charAt(3)
+        number = number.substring(0, 3) + number.substring(4, number.length)
+        if(f === 1){
+            res = "1" + number.substring(0, number.length - 1)
+        }else{
+            res = "0" + number.substring(0, number.length - 1)
         }
-        while(tmp !== endLoop){
-            for(i = len; i >= 0; --i){
-                if(tmp.charAt(i) === "0" && res.charAt(i) === "0"){
-                    res = charChange(res, i, "0")
-                    tmp = charChange(tmp, i, "0")
-                }else if(tmp.charAt(i) === "0" && res.charAt(i) === "1"){
-                    res = charChange(res, i, "1")
-                    tmp = charChange(tmp, i, "0")
-                }else if(tmp.charAt(i) === "1" && res.charAt(i) === "0"){
-                    res = charChange(res, i, "1")
-                    tmp = charChange(tmp, i, "0")
-                }else if(tmp.charAt(i) === "1" && res.charAt(i) === "1"){
-                    res = charChange(res, i, "0")
-                    if(i !== 0)
-                        tmp = charChange(tmp, i-1, "1")
+        res = res.substring(0, 3) + oper + res.substring(3, res.length)
+        return res
+    }
+
+
+    function hexMul(number1, number2){
+        var len = number1.length
+        var res = ""
+        var plus = "0"
+        var i = 0
+        for(i = len - 1; i >= 0; --i){
+            if(number1.charAt(i) === "0" && number2.charAt(i) === "0"){
+                if(plus === "0"){
+                    res = "0" + res
+                }else if(plus === "1"){
+                    res = "1" + res
+                    plus = "0"
+                }
+            }else if(number1.charAt(i) === "0" && number2.charAt(i) === "1"){
+                if(plus === "0"){
+                    res = "1" + res
+                }else if(plus === "1"){
+                    res = "0" + res
+                    plus = "1"
+                }
+            }else if(number1.charAt(i) === "1" && number2.charAt(i) === "0"){
+                if(plus === "0"){
+                    res = "1" + res
+                }else if(plus === "1"){
+                    res = "0" + res
+                    plus = "1"
+                }
+            }else if(number1.charAt(i) === "1" && number2.charAt(i) === "1"){
+                if(plus === "0"){
+                    res = "0" + res
+                    plus = "1"
+                }else if(plus === "1"){
+                    res = "1" + res
+                    plus = "1"
                 }
             }
-            console.log("in loop:", res, tmp)
-            /// 这个地方还出了问题, tmp的哪个地方的1少加了来着
         }
-
-
-        //      1111111
-        //      1111111
-
-        //tmp: 11111110
-        //res: 00000000
-
-        //     11111110
+        if(plus === "1"){
+            res = "1" + res
+        }
+        return res
     }
-
 
 
     function getBu(yuan){

@@ -41,6 +41,7 @@ Item {
         width: 30; height: 30
         text: "[-x*]补"
     }
+
     TextField{
         id: text3Field
         width: 100; height: 30
