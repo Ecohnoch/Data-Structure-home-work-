@@ -18,8 +18,7 @@ ApplicationWindow {
             MenuItem{text: "原码一位乘"; onTriggered: {mainLoader.source = "TrueCodeOneMul.qml"}}
             MenuItem{text: "原码二位乘"; onTriggered: {mainLoader.source = "TrueCodeTwoMul.qml"}}
             MenuItem{text: "补码一位乘"; onTriggered: {}}
-            MenuItem{text: "补码两位乘"; onTriggered: {}}
-            MenuItem{text: "浮点四则运算"; onTriggered: {}}
+            MenuItem{text: "浮点四则运算"; onTriggered: {mainLoader.source = "FloatFourCalculate.qml"}}
         }
     }
 

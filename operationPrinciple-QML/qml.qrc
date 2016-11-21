@@ -12,5 +12,9 @@
         <file>TrueCodeTwoMul.qml</file>
         <file>TrueCodeTwoMulLabel.qml</file>
         <file>TrueCodeTwoTag.qml</file>
+        <file>BuMaOneMul.qml</file>
+        <file>BuMaOneMulLabel.qml</file>
+        <file>FloatFourCalculate.qml</file>
+        <file>FloatFourCalculeLabel.qml</file>
     </qresource>
 </RCC>
