@@ -235,35 +235,7 @@ bool BSearchTree::search(int x){
     return false;
 }
 
-/*
-    PreIndex: 前序序列字符串中子树的第一个节点在PreArray[]中的下标
-    InIndex:  中序序列字符串中子树的第一个节点在InArray[]中的下标
-    subTreeLen: 子树的字符串序列的长度
-    PreArray： 先序序列数组
-    InArray：中序序列数组
-*/
-void PreInCreateTree(Node* root,int PreIndex,int InIndex,int subTreeLen){
-    //subTreeLen < 0 子树为空
-    if(subTreeLen <= 0){
-        root = NULL;
-        return;
-    }
-    else{
-        root = new Node;
-        //创建根节点
-        root->val = PreArray[PreIndex];
-        //找到该节点在中序序列中的位置
-        int index = strchr(InArray,PreArray[PreIndex]) - InArray;
-        //左子树结点个数
-        int LenF = index - InIndex;
-        //创建左子树
-        PreInCreateTree(T->lchild,PreIndex + 1,InIndex,LenF);
-        //右子树结点个数(总结点 - 根节点 - 左子树结点)
-        int LenR = subTreeLen - 1 - LenF;
-        //创建右子树
-        PreInCreateTree(T->rchild,PreIndex + LenF + 1,index + 1,LenR);
-    }
-}
+
 
 
 
@@ -271,10 +243,12 @@ void PreInCreateTree(Node* root,int PreIndex,int InIndex,int subTreeLen){
 void BSearchTree::test(){
     insert(11);insert(22);insert(13);insert(35);
     insert(21);insert(7);insert(32);insert(40);
-    remove(22);
+    //        11
+    //      7     22
+    //          13   35
+    //           21 32 40
 
-
-    levelOrder(root);
+    //levelOrder(root);
     cout<<endl;
 
 }
