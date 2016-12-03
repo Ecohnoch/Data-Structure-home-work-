@@ -56,7 +56,7 @@ int heap::removeMin(){
 bool heap::remove(int pos, int node){
     if(pos < 0 || pos >= currentSize) return false;
     node  = heapArray[pos];
-    heapArray[pos] = heapArray[--currentSize];
+    heapArray[pos] =  heapArray[--currentSize];
     // 用最后一个元素值来替代删除位置的元素
     if(heapArray[parent(pos)] > heapArray[pos]){
         siftUp(pos);   //当前元素小于父亲结点的话, 向上调整
@@ -85,8 +85,8 @@ void heap::siftDown(int left){
     int tmp = heapArray[i];
     while(j < currentSize){
         if(j < currentSize && heapArray[j] > heapArray[j + 1]){
-            // 如果存在右子节点 小于左子节点
-            j++; //指向右子节点
+            // 让j指向两个儿子中较小的哪一个
+            j++;
         }
         if(tmp > heapArray[j]){//如果父节点大于子节点就交换位置
             heapArray[i] = heapArray[j];

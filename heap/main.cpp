@@ -11,6 +11,7 @@ int main()
     h.insert(3);
     h.insert(5);
     h.insert(14);
+    h.removeMin();
     h.print();
     return 0;
 }
