@@ -1,5 +1,6 @@
 # Data-Structure-home-work-
 As the name. Homework.
+Being updated continuously. (长久持续更新~)
 ##Data-Structure Home Work
   * linkList          (链表)
   * hashTable         (哈希表)
