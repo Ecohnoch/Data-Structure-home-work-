@@ -79,7 +79,7 @@ Item {
         if(yuan.charAt(0) === "0") bu = yuan
         else{
             bu = yuan.substring(0, 2)
-            for(var ii = 2; ii < yuan.length; ii++){
+            for(var ii = 2; ii < yuan .length; ii++){
                 if(yuan.charAt(ii) === "0") bu = bu + "1"
                 else bu = bu + "0"
             }
@@ -88,11 +88,10 @@ Item {
                 if(bu.charAt(lastBits) === "1") oneLen++
                 else break
             }
-            if(bu.charAt(bu.length - oneLen) === "," || bu.charAt(bu.length - oneLen) === "."){
+            if(bu.charAt(bu.length - oneLen - 1) === "," || bu.charAt(bu.length - oneLen - 1) === "."){
                 var buLen = bu.length
                 bu = bu.substring(0, 2)
-                bu = bu + "1"
-                for(var t = 0; t < buLen; t++){
+                for(var t = 0; t < buLen - 2; t++){
                     bu = bu + "0"
                 }
             }else{

@@ -226,7 +226,6 @@ void Kluskal(Edge *ans, Graph g){
                 e[k].y = j;
                 e[k].w = g.edge[i][j];
                 k++;
-            }
         }
     }
     // 结束初始化e[10], 对e[10]根据权值进行排序
@@ -262,7 +261,7 @@ int main()
 {
     Graph g;
     Edge ans[6];
-    //Kluskal(ans, g);
-    prim(ans, g);
+    Kluskal(ans, g);
+//    prim(ans, g);
     return 0;
 }

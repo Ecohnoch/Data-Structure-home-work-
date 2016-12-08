@@ -103,7 +103,6 @@ Item {
     function tenTon(num){
         var res2 = [], res4 = [], res8 = [], res16 = []
         var r2 = "", r4 = "", r8 = "", r16 = ""
-
         var temp = num
         while(temp !== 0 && temp !== 1){
             var rec = temp % 2

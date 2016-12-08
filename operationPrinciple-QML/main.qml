@@ -26,6 +26,4 @@ ApplicationWindow {
         id: mainLoader
         source: ""
     }
-
-
 }
