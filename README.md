@@ -14,7 +14,8 @@ Being updated continuously. (长久持续更新~)
   * prim              (最小生成树的prim和kluskal算法都有)
   * heap              (二叉堆)
   * Dijkstra          (迪杰斯特拉最短路算法, 包含c++和JavaScript两个版本代码)
-  
+  * Floyd             (弗洛伊德算法)
+   
   
 ##Something else
   * mainDNF           (根据真值表求主析取范式)
